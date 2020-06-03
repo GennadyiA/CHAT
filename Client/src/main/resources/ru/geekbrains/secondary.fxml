@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="236.0" prefWidth="531.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.geekbrains.ChatController">
+    <children>
+        <VBox fx:id="chatPanel" alignment="CENTER" spacing="5.0" visible="true" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0">
+            <children>
+                <HBox>
+                    <children>
+                        <ListView fx:id="clientList" prefHeight="100.0" prefWidth="192.0" />
+                        <TextArea fx:id="chatTextArea" editable="false" wrapText="true">
+                            <padding>
+                                <Insets bottom="5.0" right="5.0" />
+                            </padding>
+                        </TextArea>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" maxHeight="25.0" spacing="10.0">
+                    <children>
+                        <TextField fx:id="messageText" onAction="#sendText" prefHeight="25.0" prefWidth="470.0" />
+                        <Button fx:id="sendMessageButton" alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#sendMessage" text="Send" />
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="5.0" right="5.0" />
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>

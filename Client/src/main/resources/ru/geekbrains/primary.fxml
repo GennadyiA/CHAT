@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="236.0" prefWidth="531.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.geekbrains.AuthController">
+   <children>
+      <HBox fx:id="authPanel" alignment="CENTER" layoutX="42.0" layoutY="98.0">
+         <TextField fx:id="loginField" promptText="Логин" HBox.hgrow="ALWAYS" />
+         <PasswordField fx:id="passField" promptText="Пароль" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+               <Insets left="5.0" />
+            </HBox.margin>
+         </PasswordField>
+         <Button fx:id="primaryButton" text="войти в чат" onAction="#switchToSecondary"/>
+         <Button onAction="#sendAuth" text="Подключиться" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin>
+         </Button>
+         <VBox.margin>
+            <Insets left="10.0" right="10.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</AnchorPane>
