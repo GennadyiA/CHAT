@@ -30,7 +30,15 @@ public class MessageService {
     }
 
     public void sendMessage(String message) {
-
         network.send(message);
+    }
+
+    public void processRetrievedMessage(String message) {
+        if(message.startsWith("/authok")){
+
+
+        }
+
+        chatTextArea.appendText(message + System.lineSeparator());
     }
 }

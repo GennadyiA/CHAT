@@ -3,10 +3,7 @@ package ru.geekbrains;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -19,7 +16,12 @@ public class ChatController implements Initializable {
     public @FXML    TextField messageText;
     public @FXML    Button sendMessageButton;
     public @FXML    VBox chatPanel;
+    public @FXML  TextField loginField;
+    public @FXML   PasswordField passField;
     private MessageService messageService;
+
+    public static void setVisible(boolean b) {
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,4 +53,6 @@ public class ChatController implements Initializable {
         messageService.sendMessage(message);
         messageText.clear();
     }
+
+
 }
