@@ -1,20 +1,22 @@
 package ru.geekbrains;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 
+import java.io.Closeable;
 import java.io.IOException;
 
-public class MessageService {
-    private ChatController chatController;
+public class MessageService implements Closeable {
+    private PrimaryController primaryController;
     private TextArea chatTextArea;
     private Network network;
     private final String SERVER_ADDR = "localhost";
     private final int SERVER_PORT = 8189;
 
 
-    public MessageService(ChatController chatController) {
-        this.chatTextArea = chatController.chatTextArea;
-        this.chatController = chatController;
+    public MessageService(PrimaryController primaryController) {
+        this.chatTextArea = primaryController.chatTextArea;
+        this.primaryController = primaryController;
         startConnectionToServer();
     }
 
@@ -33,12 +35,24 @@ public class MessageService {
         network.send(message);
     }
 
-    public void processRetrievedMessage(String message) {
-        if(message.startsWith("/authok")){
-
-
+    public void receiveService(String message) {
+        if (message.startsWith("/authok")) {
+            primaryController.authPanel.setVisible(false);
+            primaryController.chatPanel.setVisible(true);
         }
+        else if (primaryController.authPanel.isVisible()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Authentication is failed");
+            alert.setContentText(message);
+            alert.showAndWait();
+        }
+        else {
+            chatTextArea.appendText("Сервер: " + message + System.lineSeparator());
+        }
+    }
 
-        chatTextArea.appendText(message + System.lineSeparator());
+    @Override
+    public void close() throws IOException {
+        network.close();
     }
 }
