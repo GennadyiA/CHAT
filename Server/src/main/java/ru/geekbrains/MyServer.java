@@ -46,10 +46,17 @@ public class MyServer {
         clients.add(clientHandler);
     }
 
-    public void broadcastMessage(String message){
+    public synchronized void broadcastMessage(String message){
         for(ClientHandler client : clients){
             client.sendMessage(message);
         }
     }
 
+    public synchronized void sendPrivateMessage(String receivedLogin, String message) {
+        for (ClientHandler client : clients) {
+            if (client.getClientName().equals(receivedLogin)){
+                client.sendMessage(message);
+            }
+        }
+    }
 }

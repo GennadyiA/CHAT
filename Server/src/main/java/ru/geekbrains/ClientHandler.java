@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Date;
 
 public class ClientHandler {
 
@@ -34,33 +35,47 @@ public class ClientHandler {
     }
 
     public void authentication() throws IOException{
+        while(true){
         String clientMessage = in.readUTF();
-        if(clientMessage.startsWith("/auth")){
+        if(clientMessage.startsWith("/auth")) {
             String[] loginAndPass = clientMessage.split("\\s+");
             String login = loginAndPass[1];
-            String pass  = loginAndPass[2];
+            String pass = loginAndPass[2];
             String nick = myServer.getAuthService().getNickByLoginPass(login, pass);
-            if (nick == null){
+            if (nick == null) {
                 sendMessage("Неверный логин/пароль");
-                return;
+                continue;
             }
-            if(myServer.isNickBusy(nick)){
+            if (myServer.isNickBusy(nick)) {
                 sendMessage("Учетная запись уже используется");
-                return;
+                continue;
             }
 
             sendMessage("/authok " + nick);
             clientName = nick;
             myServer.subscribe(this);
             myServer.broadcastMessage(clientName + " зашел в чат");
-
+            break;
+        }
         }
     }
 
     private void readMessages() throws IOException{
         while (true){
             String clientMessage = in.readUTF();
-            myServer.broadcastMessage(clientName + ": " + clientMessage);
+                if(clientMessage.startsWith("/w")){
+                String[] parts = clientMessage.split("\\s+");
+                if(parts.length < 3){
+                    sendMessage("Неизвестная команда" + clientMessage);
+                    continue;
+                }
+                String receivedLogin = parts[1];
+                String message = parts[2];
+
+                myServer.sendPrivateMessage(receivedLogin, clientName + " : " + message);
+            }
+                else{
+                    myServer.broadcastMessage(clientName + ": " + clientMessage);}
             }
 
     }

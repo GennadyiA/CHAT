@@ -2,12 +2,13 @@ package ru.geekbrains;
 
 import javafx.application.Platform;
 
+import java.io.Closeable;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class Network {
+public class Network implements Closeable {
     private final Socket socket;
     private final DataInputStream in;
     private final DataOutputStream out;
@@ -23,6 +24,7 @@ public class Network {
                 try {
                     while (true) {
                         String message = in.readUTF();
+                        Platform.runLater(() -> messageService.receiveService(message));
                                            }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -39,5 +41,10 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void close() throws IOException {
+        socket.close();
     }
 }
